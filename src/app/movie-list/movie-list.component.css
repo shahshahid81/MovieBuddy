@@ -1,0 +1,9 @@
+.movie-poster {
+  width: 170px;
+  height: 250px;
+}
+
+mat-grid-list {
+  width: 80%;
+  margin: 15px auto;
+}

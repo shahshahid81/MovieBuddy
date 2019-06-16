@@ -1,0 +1,19 @@
+<div class="movie-list">
+  <mat-grid-list cols="3" rowHeight = "1:1.5" *ngIf="searchStatus">
+    <mat-grid-tile>
+      <mat-card>
+        <img mat-card-image class="movie-poster" src="{{ response.Poster }}" alt="{{ response.Poster }}">
+        <mat-card-content>
+          <p>
+            {{ response.Title | uppercase}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>More Info</button>
+          <button mat-button>Add To Watchlist</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+

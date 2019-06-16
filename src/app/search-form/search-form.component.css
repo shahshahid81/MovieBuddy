@@ -1,12 +1,13 @@
-button {
+/* button {
   margin-left: 5px;
-}
+} */
 
 .main-div {
-  margin: 20px auto 0;
+  margin: 15px auto;
   width: 80%;
 }
 
 .mat-form-field {
-  width: 100%;
+  width: 30%;
+  margin: 0 5%;
 }

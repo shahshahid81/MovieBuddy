@@ -23,6 +23,7 @@ export class SearchFormComponent implements OnInit {
       return;
     }
     this.movieService.searchMovie(movieName, movieYear);
+    formRef.resetForm();
     // let apiLink = 'http://www.omdbapi.com/?t=' + movieName + '&apikey=' + environment.apikey;
     // if ( movieYear !== '') {
     //   apiLink += '&y=' + movieYear;

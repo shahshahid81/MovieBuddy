@@ -1,12 +1,13 @@
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class MovieService {
 
   response;
-  movieSearched = false;
+  movieSearched = new Subject<boolean>();
   constructor(private http: HttpClient) { }
 
   searchMovie(movieName: string, movieYear: string) {
@@ -21,11 +22,15 @@ export class MovieService {
       .subscribe( (response) => {
         console.log(response);
         this.response = response;
-        this.movieSearched = true;
+        this.movieSearched.next(true);
       } );
   }
 
-  // getMovie() {
-  //   return {...this.response};
-  // }
+  getMovie() {
+    return {...this.response};
+  }
+
+  getSearchStatusListener() {
+    return this.movieSearched.asObservable();
+  }
 }
