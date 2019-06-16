@@ -3,16 +3,27 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AngularModule } from './angular-material.module';
+import { HeaderComponent } from './header/header.component';
+import { SearchFormComponent } from './search-form/search-form.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MovieService } from './movie.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    SearchFormComponent
   ],
   imports: [
     BrowserModule,
-    AngularModule
+    BrowserAnimationsModule,
+    AngularModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [MovieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
