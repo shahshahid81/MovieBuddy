@@ -1,0 +1,14 @@
+<div class="main-div">
+  <mat-card>
+    <form #movieSearch="ngForm" (ngSubmit)="onClickSubmit(movieSearch)">
+      <mat-form-field>
+        <input matInput id="movie-name" name="movie-name" ngModel placeholder="Enter Movie Name" required #movieName="ngModel">
+        <mat-error *ngIf="movieName.invalid"> Please Enter a Valid Movie Name </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput id="movie-year" name="movie-year" ngModel placeholder="Enter Movie Year">
+      </mat-form-field>
+      <button type="submit" mat-raised-button color="accent">Submit</button>
+    </form>
+  </mat-card>
+</div>
