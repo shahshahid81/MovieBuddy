@@ -14,7 +14,7 @@ export class MovieService {
   constructor(private http: HttpClient) { }
 
   searchMovie(movieName: string, movieYear: string, page: number = 1) {
-    if(movieName !== '') {
+    if (movieName !== '') {
       this.movieName = movieName;
     }
     let apiLink = 'http://www.omdbapi.com/?s=' + this.movieName + '&apikey=' + environment.apikey + '&page=' + page;
