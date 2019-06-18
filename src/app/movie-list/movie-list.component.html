@@ -1,19 +1,20 @@
-<div class="movie-list">
-  <mat-grid-list cols="3" rowHeight = "1:1.5" *ngIf="searchStatus">
-    <mat-grid-tile>
-      <mat-card>
-        <img mat-card-image class="movie-poster" src="{{ response.Poster }}" alt="{{ response.Poster }}">
-        <mat-card-content>
-          <p>
-            {{ response.Title | uppercase}}
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button>More Info</button>
-          <button mat-button>Add To Watchlist</button>
-        </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div class="movie-list" *ngIf="searchStatus">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4 movie-tile" *ngFor="let movie of searchResult; let i = index">
+        <figure class="figure">
+          <img src="{{ movie.Poster }}" alt="{{ movie.Title }}" class="figure-img img-fluid rounded movie-poster">
+          <figcaption class="figure-caption">{{ movie.Title }}</figcaption>
+        </figure>
+        <br>
+        <button mat-raised-button color="warn"> More Info </button>
+        <button mat-raised-button color="accent"> Add to Watchlist </button>
+      </div>
+    </div>
+    <mat-paginator
+      [length]="searchSize"
+      [pageSize]="searchResult.length"
+      (page)="onChangedPage($event)">
+    </mat-paginator>
+  </div>
 </div>
-

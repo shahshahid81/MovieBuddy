@@ -7,3 +7,12 @@ mat-grid-list {
   width: 80%;
   margin: 15px auto;
 }
+
+.movie-tile {
+  margin-top: 15px;
+}
+
+button {
+  margin-left: 5px;
+  margin-top: 5px;
+}

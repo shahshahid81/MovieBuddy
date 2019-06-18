@@ -15,8 +15,6 @@ export class SearchFormComponent implements OnInit {
   }
 
   onClickSubmit(formRef: NgForm) {
-    // console.log('Form Submitted');
-    // console.log(formRef.value);
     const movieName = formRef.value['movie-name'];
     const movieYear = formRef.value['movie-year'];
     if (movieName === '') {
@@ -24,14 +22,6 @@ export class SearchFormComponent implements OnInit {
     }
     this.movieService.searchMovie(movieName, movieYear);
     formRef.resetForm();
-    // let apiLink = 'http://www.omdbapi.com/?t=' + movieName + '&apikey=' + environment.apikey;
-    // if ( movieYear !== '') {
-    //   apiLink += '&y=' + movieYear;
-    // }
-    // this.http.get( apiLink )
-    //   .subscribe( (response) => {
-    //     console.log(response);
-    //   } );
   }
 
 }

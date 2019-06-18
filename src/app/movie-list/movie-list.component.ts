@@ -11,7 +11,8 @@ export class MovieListComponent implements OnInit, OnDestroy {
 
   searchStatus: boolean;
   searchStatusSubscription: Subscription;
-  response;
+  searchResult;
+  searchSize;
 
   constructor(private movieService: MovieService) { }
 
@@ -21,12 +22,21 @@ export class MovieListComponent implements OnInit, OnDestroy {
       .subscribe( (status) => {
         this.searchStatus = status;
         if (this.searchStatus) {
-          this.response = this.movieService.getMovie();
+          const result = this.movieService.getSearchResult();
+          this.searchResult = result.searchResult;
+          this.searchSize = result.searchSize;
         }
       });
   }
 
   ngOnDestroy() {
     this.searchStatusSubscription.unsubscribe();
+  }
+
+  onChangedPage(event) {
+    this.movieService.searchMovie('', '', event.pageIndex + 1);
+    const result = this.movieService.getSearchResult();
+    this.searchResult = result.searchResult;
+    this.searchSize = result.searchSize;
   }
 }
