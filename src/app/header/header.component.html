@@ -1,3 +1,28 @@
 <mat-toolbar color="primary">
-  <span> {{ title }}</span>
+  <span>
+    <a routerLink="/"> {{ title }} </a>
+  </span>
+  <span class="spacer"></span>
+  <ul>
+    <li>
+      <a
+      mat-button
+      routerLink="/"
+      routerLinkActive="mat-accent"
+      [routerLinkActiveOptions]="{exact: true}">Search</a>
+    </li>
+    <li>
+      <a mat-button
+      routerLink="/login"
+      routerLinkActive="mat-accent"
+      [routerLinkActiveOptions]="{exact: true}">Login</a>
+    </li>
+    <li>
+      <a
+      mat-button
+      routerLink="/register"
+      routerLinkActive="mat-accent"
+      [routerLinkActiveOptions]="{exact: true}">Register</a>
+    </li>
+  </ul>
 </mat-toolbar>

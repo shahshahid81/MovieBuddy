@@ -15,6 +15,7 @@ export class SearchFormComponent implements OnInit {
   }
 
   onClickSubmit(formRef: NgForm) {
+
     const movieName = formRef.value['movie-name'];
     const movieYear = formRef.value['movie-year'];
     if (movieName === '') {

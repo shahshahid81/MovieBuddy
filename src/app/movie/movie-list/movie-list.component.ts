@@ -7,30 +7,20 @@ import { Subscription } from 'rxjs';
   templateUrl: './movie-list.component.html',
   styleUrls: ['./movie-list.component.css']
 })
-export class MovieListComponent implements OnInit, OnDestroy {
+export class MovieListComponent implements OnInit {
 
   searchStatus: boolean;
   searchStatusSubscription: Subscription;
   searchResult;
   searchSize;
+  defaultPoster = '/assets/img/defaultPoster.jpg';
 
   constructor(private movieService: MovieService) { }
 
   ngOnInit() {
-    this.searchStatus = false;
-    this.searchStatusSubscription = this.movieService.getSearchStatusListener()
-      .subscribe( (status) => {
-        this.searchStatus = status;
-        if (this.searchStatus) {
-          const result = this.movieService.getSearchResult();
-          this.searchResult = result.searchResult;
-          this.searchSize = result.searchSize;
-        }
-      });
-  }
-
-  ngOnDestroy() {
-    this.searchStatusSubscription.unsubscribe();
+    const result = this.movieService.getSearchResult();
+    this.searchResult = result.searchResult;
+    this.searchSize = result.searchSize;
   }
 
   onChangedPage(event) {
@@ -38,5 +28,9 @@ export class MovieListComponent implements OnInit, OnDestroy {
     const result = this.movieService.getSearchResult();
     this.searchResult = result.searchResult;
     this.searchSize = result.searchSize;
+  }
+
+  loadDefaultImage(event) {
+    event.target.src = this.defaultPoster;
   }
 }

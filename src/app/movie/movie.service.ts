@@ -2,6 +2,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class MovieService {
@@ -10,8 +11,8 @@ export class MovieService {
   movieYear: string;
   searchResult;
   searchSize;
-  movieSearched = new Subject<boolean>();
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router: Router) { }
 
   searchMovie(movieName: string, movieYear: string, page: number = 1) {
     if (movieName !== '') {
@@ -22,13 +23,12 @@ export class MovieService {
       this.movieYear = movieYear;
       apiLink += '&y=' + this.movieYear;
     }
-    this.http.get( apiLink )
+    this.http.get( encodeURI(apiLink) )
       .subscribe( (response: any) => {
         console.log(response);
         this.searchSize = response.totalResults;
         this.searchResult = response.Search.filter( movie => movie.Type === 'movie' || movie.Type === 'series');
-        // console.log(this.searchResult);
-        this.movieSearched.next(true);
+        this.router.navigate(['/result']);
       } );
   }
 
@@ -36,7 +36,4 @@ export class MovieService {
     return {searchResult: [...this.searchResult], searchSize: this.searchSize};
   }
 
-  getSearchStatusListener() {
-    return this.movieSearched.asObservable();
-  }
 }
