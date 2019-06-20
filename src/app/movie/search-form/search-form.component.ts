@@ -14,7 +14,7 @@ export class SearchFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  onClickSubmit(formRef: NgForm) {
+  onMovieSearch(formRef: NgForm) {
 
     const movieName = formRef.value['movie-name'];
     const movieYear = formRef.value['movie-year'];

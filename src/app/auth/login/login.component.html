@@ -1,12 +1,29 @@
 <mat-card>
-  <form>
+  <form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
     <mat-form-field>
-      <input type="email" matInput placeholder="Enter Email Address">
+      <input
+      type="email"
+      matInput
+      placeholder="Enter Email Address"
+      ngModel
+      name="email"
+      #email="ngModel"
+      required
+      email>
+      <mat-error *ngIf="email.invalid"> Please Enter a Valid Email Address </mat-error>
     </mat-form-field>
-
     <mat-form-field>
-      <input type="password" matInput placeholder="Enter Password">
+      <input
+      type="password"
+      matInput
+      placeholder="Enter Password"
+      ngModel
+      name="password"
+      #password="ngModel"
+      required>
+      <mat-error *ngIf="password.invalid"> Please Enter a Valid Password </mat-error>
     </mat-form-field>
     <button mat-raised-button type="submit" color="accent"> Login </button>
   </form>
+  <mat-error *ngIf="loginFailed"> Error occured during login. </mat-error>
 </mat-card>
