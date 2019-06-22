@@ -13,6 +13,7 @@ import { MovieListComponent } from './movie/movie-list/movie-list.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AppRoutingModule } from './app-routing.module';
+import { MovieDetailComponent } from './movie/movie-detail/movie-detail.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AppRoutingModule } from './app-routing.module';
     SearchFormComponent,
     MovieListComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    MovieDetailComponent
   ],
   imports: [
     BrowserModule,

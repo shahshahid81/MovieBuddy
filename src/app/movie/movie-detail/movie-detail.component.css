@@ -1,0 +1,23 @@
+mat-spinner {
+  margin: 10px auto;
+}
+
+img.movie-poster {
+  width: 200px;
+  height: 300px;
+  margin: 10px auto;
+}
+
+.title {
+  margin-top: 10px;
+}
+
+.plot {
+  margin-top: 5px;
+  text-align: justify;
+}
+
+button {
+  margin-left: 5px;
+  margin-top: 5px;
+}

@@ -4,11 +4,21 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { SearchFormComponent } from './movie/search-form/search-form.component';
 import { MovieListComponent } from './movie/movie-list/movie-list.component';
-import { ResultGuard } from './movie/result.gaurd'
+import { ResultGuard } from './movie/result.gaurd';
+import { MovieDetailComponent } from './movie/movie-detail/movie-detail.component';
 
 const routes: Routes = [
   { path: '', component: SearchFormComponent },
-  { path: 'result', component: MovieListComponent, canActivate: [ResultGuard] },
+  {
+    path: 'result',
+    component: MovieListComponent,
+    canActivate: [ResultGuard]
+  },
+  {
+    path: 'result/:id',
+    component: MovieDetailComponent,
+    canActivate: [ResultGuard]
+  },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent }
 ];

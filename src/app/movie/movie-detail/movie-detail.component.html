@@ -1,0 +1,18 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class="movie-detail" *ngIf="!isLoading">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <img src="{{ response.Poster }}" (error)="loadDefaultImage($event)" class="img-fluid movie-poster" alt="Responsive image">
+      </div>
+      <div class="col-sm-8">
+        <h4 class="title"> {{ response.Title }} ({{ response.Year }}) </h4>
+        <p class="plot"> Plot: &nbsp;&nbsp;&nbsp;&nbsp; {{ response.Plot === 'N/A' ? 'Plot not available' : response.Plot }} </p>
+        <p> Actors: {{ response.Actors }} </p>
+        <p> Genre: {{ response.Genre }} </p>
+        <button mat-raised-button color="primary" (click)="backToResults()"> Back to Results </button>
+        <button mat-raised-button color="accent"> Add to Watchlist </button>
+      </div>
+    </div>
+  </div>
+</div>

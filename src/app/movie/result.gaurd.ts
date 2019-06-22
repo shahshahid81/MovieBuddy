@@ -5,12 +5,12 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ResultGuard implements CanActivate {
 
-  constructor(private movieService: MovieService,private router: Router) {}
+  constructor(private movieService: MovieService, private router: Router) {}
 
   canActivate(): boolean {
     // console.log('result guard');
     // console.log(this.movieService.searchResult);
-    if ( this.movieService.searchResult === undefined ) {
+    if ( !this.movieService.movieSearched ) {
       this.router.navigate(['/']);
       return false;
     }

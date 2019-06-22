@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MovieService } from '../movie.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-list',
@@ -9,28 +10,47 @@ import { Subscription } from 'rxjs';
 })
 export class MovieListComponent implements OnInit {
 
-  searchStatus: boolean;
-  searchStatusSubscription: Subscription;
   searchResult;
   searchSize;
-  defaultPoster = '/assets/img/defaultPoster.jpg';
+  isLoading;
 
-  constructor(private movieService: MovieService) { }
+  constructor(private movieService: MovieService,
+              private router: Router) { }
 
   ngOnInit() {
-    const result = this.movieService.getSearchResult();
-    this.searchResult = result.searchResult;
-    this.searchSize = result.searchSize;
+    this.isLoading = true;
+    this.movieService.getSearchResult()
+    .subscribe( (response: any) => {
+      // console.log(response);
+      this.searchSize = response.totalResults;
+      this.searchResult = response.Search.filter( movie => movie.Type === 'movie' || movie.Type === 'series');
+      this.isLoading = false;
+      // console.log(this.searchSize);
+      // console.log(this.searchResult);
+    });
   }
 
   onChangedPage(event) {
-    this.movieService.searchMovie('', '', event.pageIndex + 1);
-    const result = this.movieService.getSearchResult();
-    this.searchResult = result.searchResult;
-    this.searchSize = result.searchSize;
+    this.movieService.searchMovies('', '', event.pageIndex + 1);
+    this.isLoading = true;
+    this.movieService.getSearchResult()
+    .subscribe( (response: any) => {
+      if ( response.Response === 'False') {
+        this.isLoading = false;
+      }
+      console.log(response);
+      this.searchSize = response.totalResults;
+      this.searchResult = response.Search.filter( movie => movie.Type === 'movie' || movie.Type === 'series');
+      this.isLoading = false;
+    });
   }
 
   loadDefaultImage(event) {
-    event.target.src = this.defaultPoster;
+    event.target.src = this.movieService.getDefaultPoster();
+  }
+
+  onMoreInfo(event) {
+    const imdbID = event.currentTarget.id;
+    this.router.navigate(['/result/', imdbID]);
   }
 }

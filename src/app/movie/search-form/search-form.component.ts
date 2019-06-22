@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MovieService } from '../movie.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-form',
@@ -9,7 +10,8 @@ import { MovieService } from '../movie.service';
 })
 export class SearchFormComponent implements OnInit {
 
-  constructor(private movieService: MovieService) { }
+  constructor(private movieService: MovieService,
+              private router: Router) { }
 
   ngOnInit() {
   }
@@ -21,7 +23,8 @@ export class SearchFormComponent implements OnInit {
     if (movieName === '') {
       return;
     }
-    this.movieService.searchMovie(movieName, movieYear);
+    this.movieService.searchMovies(movieName, movieYear);
+    this.router.navigate(['/result']);
     formRef.resetForm();
   }
 

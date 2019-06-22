@@ -16,3 +16,7 @@ button {
   margin-left: 5px;
   margin-top: 5px;
 }
+
+mat-spinner {
+  margin: 10px auto;
+}
