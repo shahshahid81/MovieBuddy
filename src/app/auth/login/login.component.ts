@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,26 +9,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  loginFailed: boolean;
-
-  constructor(private http: HttpClient,
-              private router: Router) { }
+  loginFailed;
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.loginFailed = false;
   }
 
   onLogin(form: NgForm) {
-    this.http.post('http://localhost:3000/login', form.value)
-      .subscribe( (response: {message: string} ) => {
-        console.log(response);
-        if (response.message === 'success') {
-          this.router.navigate(['/']);
-        } else if (response.message === 'failed') {
-          this.loginFailed = true;
-        }
-      }, (err) => {
-        console.log(err);
-      });
+    this.authService.logIn(form.value);
   }
 
 }

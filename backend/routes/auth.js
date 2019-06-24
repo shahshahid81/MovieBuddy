@@ -5,7 +5,7 @@ const User = require('../models/user');
 
 router.post('/register', (req,res) => {
   const newUser = {
-    email: req.body.email
+    username: req.body.email
   };
   const password = req.body.password;
   User.register(newUser, password, (err, user) => {
@@ -21,29 +21,28 @@ router.post('/register', (req,res) => {
   });
 });
 
-router.post('/login', (req,res) => {
+router.post('/login', (req,res,next) => {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) {
+      return res.json({message: 'failed'});
+    }
+    if (!user) {
+      return res.json({message: 'failed'});
+    }
+    req.logIn(user, function(err) {
+      if (err) {
+        return res.json({message: 'failed'});
+      }
+      return res.json({message: 'success'});
+    });
+  })(req, res, next);
+});
+
+router.get('/logout', (req,res) => {
+  req.logout();
   res.json({
     message: 'success'
   });
-  passport.authenticate('local', (err, user) => {
-    if (err || !user) {
-      console.log(err);
-      res.json({
-        message: 'failed'
-      });
-    }
-    req.logIn(user, (err) => {
-      if(err) {
-        console.log(err);
-        res.json({
-          message: 'failed'
-        });
-      }
-      res.json({
-        message: 'success'
-      });
-    })
-  })(req,res,next);
 });
 
 module.exports = router;

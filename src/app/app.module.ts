@@ -14,6 +14,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MovieDetailComponent } from './movie/movie-detail/movie-detail.component';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { MovieDetailComponent } from './movie/movie-detail/movie-detail.componen
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [MovieService],
+  providers: [MovieService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,6 @@
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable()

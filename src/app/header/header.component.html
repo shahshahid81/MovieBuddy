@@ -12,7 +12,9 @@
       [routerLinkActiveOptions]="{exact: true}">Search</a>
     </li>
     <li>
-      <a mat-button
+      <a
+      mat-button
+      *ngIf="!isLoggedIn"
       routerLink="/login"
       routerLinkActive="mat-accent"
       [routerLinkActiveOptions]="{exact: true}">Login</a>
@@ -20,9 +22,16 @@
     <li>
       <a
       mat-button
+      *ngIf="!isLoggedIn"
       routerLink="/register"
       routerLinkActive="mat-accent"
       [routerLinkActiveOptions]="{exact: true}">Register</a>
+    </li>
+    <li>
+      <a
+      mat-button
+      *ngIf="isLoggedIn"
+      (click)="onLogout()">Logout</a>
     </li>
   </ul>
 </mat-toolbar>
