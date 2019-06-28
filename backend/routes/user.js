@@ -33,7 +33,10 @@ router.post('/login', (req,res,next) => {
       if (err) {
         return res.json({message: 'failed'});
       }
-      return res.json({message: 'success'});
+      return res.json({
+        message: 'success',
+        userID: req.user._id
+      });
     });
   })(req, res, next);
 });
@@ -43,6 +46,26 @@ router.get('/logout', (req,res) => {
   res.json({
     message: 'success'
   });
+});
+
+router.post('/user/:userid/watchlist/:movieid', (req,res) => {
+  const movieid = req.params.movieid;
+  User.findByIdAndUpdate(
+    req.params.userid,
+    {$addToSet: {watchlist:  movieid}},
+    { new: true },
+    (err,user) => {
+      if(err){
+        console.log(err);
+        return res.json({
+          message: 'failed'
+        });
+      }
+      res.json({
+        message: 'success'
+      });
+    }
+  );
 });
 
 module.exports = router;

@@ -7,7 +7,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require("express-session");
 
-const auth = require('./routes/auth');
+const userRoutes = require('./routes/user');
 const User = require('./models/user');
 
 const port = process.env.PORT || 3000;
@@ -34,7 +34,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use('/',auth);
+app.use('/',userRoutes);
 
 app.listen(port,() => {
   console.log('Server started on port: ' + port);

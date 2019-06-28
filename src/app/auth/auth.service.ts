@@ -12,18 +12,20 @@ export class AuthService {
   isLoggedIn = false;
   isRegistered = false;
   loginStatus = new Subject<boolean>();
+  userID: string;
 
   logIn(userData) {
     console.log(userData);
     this.http.post('http://localhost:3000/login', userData)
-    .subscribe( (response: {message: string} ) => {
+    .subscribe( (response: {message: string, userID: string} ) => {
       console.log(response);
       if (response.message === 'success') {
-        // this.isLoggedIn = true;
+        this.isLoggedIn = true;
         this.loginStatus.next(true);
+        this.userID = response.userID;
         this.router.navigate(['/']);
       } else if (response.message === 'failed') {
-        // this.isLoggedIn = false;
+        this.isLoggedIn = false;
         this.loginStatus.next(false);
       }
     }, (err) => {
@@ -50,11 +52,15 @@ export class AuthService {
 
   logout() {
     this.http.get('http://localhost:3000/logout')
-      .subscribe( (response) => {
+      .subscribe( (response: {message: string}) => {
         console.log(response);
-        this.loginStatus.next(false);
-        // if (response.message === 'sucess') {
-        // }
+        if (response.message === 'success') {
+          this.loginStatus.next(false);
+        }
       });
+  }
+
+  getUserID() {
+    return this.userID;
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MovieService } from '../movie.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-movie-list',
@@ -15,18 +16,16 @@ export class MovieListComponent implements OnInit {
   isLoading;
 
   constructor(private movieService: MovieService,
-              private router: Router) { }
+              private router: Router,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.isLoading = true;
     this.movieService.getSearchResult()
     .subscribe( (response: any) => {
-      // console.log(response);
       this.searchSize = response.totalResults;
       this.searchResult = response.Search.filter( movie => movie.Type === 'movie' || movie.Type === 'series');
       this.isLoading = false;
-      // console.log(this.searchSize);
-      // console.log(this.searchResult);
     });
   }
 
@@ -52,5 +51,19 @@ export class MovieListComponent implements OnInit {
   onMoreInfo(event) {
     const imdbID = event.currentTarget.id;
     this.router.navigate(['/result/', imdbID]);
+  }
+
+  onAddToWatchList(event) {
+    if (!this.authService.isLoggedIn) {
+      return this.router.navigate(['/login']);
+    }
+    const imdbID = event.currentTarget.id;
+    this.movieService.addToWatchList(imdbID)
+      .subscribe( (response: {message: string}) => {
+      console.log(response);
+      if ( response.message === 'success') {
+        event.target.innerText = 'Added to Watchlist';
+      }
+    });
   }
 }

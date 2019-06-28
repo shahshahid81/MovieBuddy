@@ -2,6 +2,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class MovieService {
@@ -15,7 +16,8 @@ export class MovieService {
   defaultPoster = '/assets/img/defaultPoster.jpg';
 
   constructor(private http: HttpClient,
-              private router: Router) { }
+              private router: Router,
+              private authService: AuthService) { }
 
   searchMovies(movieName: string, movieYear: string, page: number = 1) {
     if (movieName !== '') {
@@ -42,4 +44,7 @@ export class MovieService {
     return this.defaultPoster;
   }
 
+  addToWatchList(imdbID) {
+    return this.http.post('http://localhost:3000/user/' + this.authService.getUserID() + '/watchlist/' + imdbID, '');
+  }
 }

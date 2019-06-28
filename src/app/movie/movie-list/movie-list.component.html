@@ -9,7 +9,7 @@
         </figure>
         <br>
         <button mat-raised-button color="warn" data-id= '{{ movie.imdbID }}' (click)="onMoreInfo($event)"> More Info </button>
-        <button mat-raised-button color="accent"> Add to Watchlist </button>
+        <button mat-raised-button color="accent" data-id= '{{ movie.imdbID }}' (click)="onAddToWatchList($event)"> Add to Watchlist </button>
       </div>
     </div>
     <mat-paginator
