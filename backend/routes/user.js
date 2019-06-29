@@ -48,6 +48,38 @@ router.get('/logout', (req,res) => {
   });
 });
 
+router.get('/user/:userid/watchlist', (req,res) => {
+  const userid = req.params.userid;
+  User.findById(userid, (err,user) => {
+    if(err){
+      console.log(err);
+      return res.json({
+        message: 'failed'
+      });
+    }
+    res.json({
+      message: 'success',
+      watchlist: JSON.stringify(user.watchlist)
+    });
+  });
+});
+
+router.get('/user/:userid/watchlist/:movieid', (req,res) => {
+  User.findOne(
+    {watchlist: req.params.movieid},
+    (err,user) => {
+    if(err || !user){
+      console.log(err);
+      return res.json({
+        message: 'failed'
+      });
+    }
+    res.json({
+      message: 'success'
+    });
+  });
+});
+
 router.post('/user/:userid/watchlist/:movieid', (req,res) => {
   const movieid = req.params.movieid;
   User.findByIdAndUpdate(
@@ -56,6 +88,26 @@ router.post('/user/:userid/watchlist/:movieid', (req,res) => {
     { new: true },
     (err,user) => {
       if(err){
+        console.log(err);
+        return res.json({
+          message: 'failed'
+        });
+      }
+      res.json({
+        message: 'success'
+      });
+    }
+  );
+});
+
+router.delete('/user/:userid/watchlist/:movieid', (req,res) => {
+  const movieid = req.params.movieid;
+  User.findByIdAndUpdate(
+    req.params.userid,
+    { $pull: {watchlist: movieid}},
+    { new: true},
+    (err,user) => {
+      if(err) {
         console.log(err);
         return res.json({
           message: 'failed'

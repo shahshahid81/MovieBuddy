@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Subscription } from 'rxjs';
+import { MovieService } from '../movie/movie.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +15,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean;
   loginStatus: Subscription;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit() {
     this.title = 'MovieBuddy';
@@ -29,6 +32,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.authService.logout();
+  }
+
+  onWatchlist() {
+    const userid = this.authService.getUserID();
+    this.router.navigate(['/user/', userid, 'watchlist']);
   }
 
 }

@@ -47,4 +47,16 @@ export class MovieService {
   addToWatchList(imdbID) {
     return this.http.post('http://localhost:3000/user/' + this.authService.getUserID() + '/watchlist/' + imdbID, '');
   }
+
+  removeFromWatchList(imdbID) {
+    return this.http.delete('http://localhost:3000/user/' + this.authService.getUserID() + '/watchlist/' + imdbID);
+  }
+
+  getWatchList(userID) {
+    return this.http.get('http://localhost:3000/user/' + userID + '/watchlist');
+  }
+
+  getWatchListStatus(imdbID) {
+    return this.http.get('http://localhost:3000/user/' + this.authService.getUserID() + '/watchlist/' + imdbID);
+  }
 }

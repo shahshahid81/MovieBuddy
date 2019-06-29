@@ -1,0 +1,26 @@
+.movie-poster {
+  width: 170px;
+  height: 250px;
+}
+
+mat-grid-list {
+  width: 80%;
+  margin: 15px auto;
+}
+
+.movie-tile {
+  margin-top: 15px;
+}
+
+h4 {
+  margin-top: 15px;
+}
+
+button {
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+mat-spinner {
+  margin: 10px auto;
+}

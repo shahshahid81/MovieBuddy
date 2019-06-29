@@ -11,7 +11,18 @@
         <p> Actors: {{ response.Actors }} </p>
         <p> Genre: {{ response.Genre }} </p>
         <button mat-raised-button color="primary" (click)="backToResults()"> Back to Results </button>
-        <button mat-raised-button color="accent"> Add to Watchlist </button>
+        <button
+        mat-raised-button
+        color="accent"
+        *ngIf="!isInWatchlist"
+        data-id= '{{ response.imdbID }}'
+        (click)="onAddToWatchList($event)"> Add to Watchlist </button>
+        <button
+        mat-raised-button
+        color="accent"
+        *ngIf="isInWatchlist"
+        data-id= '{{ response.imdbID }}'
+        (click)="onRemoveFromWatchList($event)"> Remove from Watchlist </button>
       </div>
     </div>
   </div>

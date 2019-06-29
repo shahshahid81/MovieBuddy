@@ -15,6 +15,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MovieDetailComponent } from './movie/movie-detail/movie-detail.component';
 import { AuthService } from './auth/auth.service';
+import { WatchlistComponent } from './movie/watchlist/watchlist.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AuthService } from './auth/auth.service';
     MovieListComponent,
     LoginComponent,
     RegisterComponent,
-    MovieDetailComponent
+    MovieDetailComponent,
+    WatchlistComponent
   ],
   imports: [
     BrowserModule,

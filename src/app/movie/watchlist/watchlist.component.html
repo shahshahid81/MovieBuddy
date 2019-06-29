@@ -1,0 +1,17 @@
+<div class="movie-list">
+  <mat-spinner *ngIf='isLoading'></mat-spinner>
+  <div class="container" *ngIf='!isLoading'>
+    <h4 *ngIf="watchlist.length === 0"> Watchlist is empty!</h4>
+    <div class="row" *ngIf="watchlist.length !== 0">
+      <div class="col-sm-4 movie-tile" *ngFor="let movie of watchlist">
+        <figure class="figure">
+          <img src="{{ movie.Poster }}" (error)="loadDefaultImage($event)" alt="{{ movie.Title }}" class="figure-img img-fluid rounded movie-poster">
+          <figcaption class="figure-caption">{{ movie.Title }}</figcaption>
+        </figure>
+        <br>
+        <button mat-raised-button color="warn" data-id= '{{ movie.imdbID }}' (click)="onMoreInfo($event)"> More Info </button>
+        <button mat-raised-button color="accent" data-id= '{{ movie.imdbID }}' (click)="onRemoveFromWatchList($event)"> Remove from Watchlist </button>
+      </div>
+    </div>
+  </div>
+</div>

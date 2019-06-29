@@ -11,6 +11,7 @@ export class ResultGuard implements CanActivate {
     // console.log('result guard');
     // console.log(this.movieService.searchResult);
     if ( !this.movieService.movieSearched ) {
+      console.log('guard used');
       this.router.navigate(['/']);
       return false;
     }

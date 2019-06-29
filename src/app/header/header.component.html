@@ -30,6 +30,14 @@
     <li>
       <a
       mat-button
+      (click)="onWatchlist()"
+      routerLinkActive="mat-accent"
+      [routerLinkActiveOptions]="{exact: true}"
+      *ngIf="isLoggedIn">Watchlist</a>
+    </li>
+    <li>
+      <a
+      mat-button
       *ngIf="isLoggedIn"
       (click)="onLogout()">Logout</a>
     </li>
