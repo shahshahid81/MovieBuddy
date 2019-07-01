@@ -20,7 +20,6 @@ export class MovieDetailComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.isInWatchlist = false;
-    // let imdbID = this.router.url.slice(8);
     const imdbID = this.route.snapshot.paramMap.get('movieid');
     this.movieService.searchMovie(imdbID)
       .subscribe( (response: any) => {

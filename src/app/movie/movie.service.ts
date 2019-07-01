@@ -32,12 +32,12 @@ export class MovieService {
   }
 
   getSearchResult() {
-    return this.http.get( encodeURI(this.apiLink) );
+    return this.http.get( encodeURI(this.apiLink) , {withCredentials: false});
   }
 
   searchMovie(imdbID: string) {
     const apiLink = 'http://www.omdbapi.com/?i=' + imdbID + '&apikey=' + environment.apikey;
-    return this.http.get( encodeURI(apiLink));
+    return this.http.get( encodeURI(apiLink), {withCredentials: false});
   }
 
   getDefaultPoster() {
@@ -45,18 +45,22 @@ export class MovieService {
   }
 
   addToWatchList(imdbID) {
-    return this.http.post('http://localhost:3000/user/' + this.authService.getUserID() + '/watchlist/' + imdbID, '');
+    const url = 'http://localhost:3000/user/' + this.authService.getUserID() + '/watchlist/' + imdbID;
+    return this.http.post(url, '', { withCredentials: true });
   }
 
   removeFromWatchList(imdbID) {
-    return this.http.delete('http://localhost:3000/user/' + this.authService.getUserID() + '/watchlist/' + imdbID);
+    const url = 'http://localhost:3000/user/' + this.authService.getUserID() + '/watchlist/' + imdbID;
+    return this.http.delete(url, { withCredentials: true });
   }
 
   getWatchList(userID) {
-    return this.http.get('http://localhost:3000/user/' + userID + '/watchlist');
+    const url = 'http://localhost:3000/user/' + userID + '/watchlist';
+    return this.http.get(url, { withCredentials: true });
   }
 
   getWatchListStatus(imdbID) {
-    return this.http.get('http://localhost:3000/user/' + this.authService.getUserID() + '/watchlist/' + imdbID);
+    const url = 'http://localhost:3000/user/' + this.authService.getUserID() + '/watchlist/' + imdbID;
+    return this.http.get(url, { withCredentials: true });
   }
 }

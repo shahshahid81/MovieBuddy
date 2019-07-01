@@ -12,11 +12,10 @@ export class AuthService {
   isLoggedIn = false;
   isRegistered = false;
   loginStatus = new Subject<boolean>();
-  userID: string;
+  userID = '';
 
   logIn(userData) {
-    console.log(userData);
-    this.http.post('http://localhost:3000/login', userData)
+    this.http.post('http://localhost:3000/login', userData, {withCredentials: true})
     .subscribe( (response: {message: string, userID: string} ) => {
       console.log(response);
       if (response.message === 'success') {
@@ -34,7 +33,7 @@ export class AuthService {
   }
 
   register(userData) {
-    this.http.post('http://localhost:3000/register', userData)
+    this.http.post('http://localhost:3000/register', userData, {withCredentials: true})
       .subscribe( (response: {message: string} ) => {
         console.log(response);
         if (response.message === 'success') {
@@ -51,7 +50,7 @@ export class AuthService {
   }
 
   logout() {
-    this.http.get('http://localhost:3000/logout')
+    this.http.get('http://localhost:3000/logout', {withCredentials: true})
       .subscribe( (response: {message: string}) => {
         console.log(response);
         if (response.message === 'success') {

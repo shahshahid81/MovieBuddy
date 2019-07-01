@@ -38,12 +38,6 @@ export class WatchlistComponent implements OnInit {
             this.isLoading = false;
             this.watchlist = val;
           });
-        // const observable = forkJoin([
-        //   of(this.watchlist)
-        // ]);
-        // observable.subscribe( (value) => {
-        //   console.log(value);
-        // } );
       });
   }
 

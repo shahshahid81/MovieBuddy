@@ -2,6 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 
 const User = require('../models/user');
+const middleware = require('../middleware/middleware');
 
 router.post('/register', (req,res) => {
   const newUser = {
@@ -27,11 +28,11 @@ router.post('/login', (req,res,next) => {
       return res.json({message: 'failed'});
     }
     if (!user) {
-      return res.json({message: 'failed'});
+      return res.json({message: 'no user'});
     }
     req.logIn(user, function(err) {
       if (err) {
-        return res.json({message: 'failed'});
+        return res.json({message: 'password incorrect'});
       }
       return res.json({
         message: 'success',
@@ -41,52 +42,19 @@ router.post('/login', (req,res,next) => {
   })(req, res, next);
 });
 
-router.get('/logout', (req,res) => {
-  req.logout();
-  res.json({
-    message: 'success'
-  });
-});
-
-router.get('/user/:userid/watchlist', (req,res) => {
-  const userid = req.params.userid;
-  User.findById(userid, (err,user) => {
-    if(err){
-      console.log(err);
-      return res.json({
-        message: 'failed'
-      });
-    }
-    res.json({
-      message: 'success',
-      watchlist: JSON.stringify(user.watchlist)
-    });
-  });
-});
-
-router.get('/user/:userid/watchlist/:movieid', (req,res) => {
-  User.findOne(
-    {watchlist: req.params.movieid},
-    (err,user) => {
-    if(err || !user){
-      console.log(err);
-      return res.json({
-        message: 'failed'
-      });
-    }
+router.get('/logout',
+  (req,res) => {
+    req.logout();
     res.json({
       message: 'success'
     });
-  });
 });
 
-router.post('/user/:userid/watchlist/:movieid', (req,res) => {
-  const movieid = req.params.movieid;
-  User.findByIdAndUpdate(
-    req.params.userid,
-    {$addToSet: {watchlist:  movieid}},
-    { new: true },
-    (err,user) => {
+router.get('/user/:userid/watchlist',
+  middleware.isLoggedIn,
+  (req,res) => {
+    const userid = req.params.userid;
+    User.findById(userid, (err,user) => {
       if(err){
         console.log(err);
         return res.json({
@@ -94,20 +62,19 @@ router.post('/user/:userid/watchlist/:movieid', (req,res) => {
         });
       }
       res.json({
-        message: 'success'
+        message: 'success',
+        watchlist: JSON.stringify(user.watchlist)
       });
-    }
-  );
+  });
 });
 
-router.delete('/user/:userid/watchlist/:movieid', (req,res) => {
-  const movieid = req.params.movieid;
-  User.findByIdAndUpdate(
-    req.params.userid,
-    { $pull: {watchlist: movieid}},
-    { new: true},
-    (err,user) => {
-      if(err) {
+router.get('/user/:userid/watchlist/:movieid',
+  middleware.isLoggedIn,
+  (req,res) => {
+    User.findOne(
+      {watchlist: req.params.movieid},
+      (err,user) => {
+      if(err || !user){
         console.log(err);
         return res.json({
           message: 'failed'
@@ -116,8 +83,51 @@ router.delete('/user/:userid/watchlist/:movieid', (req,res) => {
       res.json({
         message: 'success'
       });
-    }
-  );
+    });
+});
+
+router.post('/user/:userid/watchlist/:movieid',
+  middleware.isLoggedIn,
+  (req,res) => {
+    const movieid = req.params.movieid;
+    User.findByIdAndUpdate(
+      req.params.userid,
+      {$addToSet: {watchlist:  movieid}},
+      { new: true },
+      (err,user) => {
+        if(err){
+          console.log(err);
+          return res.json({
+            message: 'failed'
+          });
+        }
+        res.json({
+          message: 'success'
+        });
+      }
+    );
+});
+
+router.delete('/user/:userid/watchlist/:movieid',
+  middleware.isLoggedIn,
+  (req,res) => {
+    const movieid = req.params.movieid;
+    User.findByIdAndUpdate(
+      req.params.userid,
+      { $pull: {watchlist: movieid}},
+      { new: true},
+      (err,user) => {
+        if(err) {
+          console.log(err);
+          return res.json({
+            message: 'failed'
+          });
+        }
+        res.json({
+          message: 'success'
+        });
+      }
+    );
 });
 
 module.exports = router;
