@@ -37,7 +37,13 @@ export class WatchlistComponent implements OnInit {
           .subscribe( val => {
             this.isLoading = false;
             this.watchlist = val;
+          }, (error) => {
+            this.isLoading = false;
+            this.watchlist = null;
           });
+      }, (error) => {
+        this.isLoading = false;
+        this.watchlist = null;
       });
   }
 
@@ -53,9 +59,9 @@ export class WatchlistComponent implements OnInit {
   onRemoveFromWatchList(event) {
     const imdbID = event.currentTarget.id;
     this.movieService.removeFromWatchList(imdbID)
-      .subscribe( (response: any) => {
+      .subscribe( (response: {message: string, status: string}) => {
         console.log(response);
-        if (response.message === 'success') {
+        if (response.status === 'success') {
           event.target.innerText = 'Removed from Watchlist';
         }
       });

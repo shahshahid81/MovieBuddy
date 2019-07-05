@@ -13,11 +13,13 @@ router.post('/register', (req,res) => {
     if(err) {
       console.log(err);
       res.json({
-        message: 'failed'
+        status: 'failed',
+        message: 'Error while creating user.'
       });
     }
     res.json({
-      message: 'success'
+      status: 'success',
+      message: 'User Created Sucessfully.'
     });
   });
 });
@@ -25,17 +27,25 @@ router.post('/register', (req,res) => {
 router.post('/login', (req,res,next) => {
   passport.authenticate('local', function(err, user, info) {
     if (err) {
-      return res.json({message: 'failed'});
+      return res.json({
+        status: 'failed',
+        message: 'Error while logging in.'
+      });
     }
     if (!user) {
-      return res.json({message: 'no user'});
+      return res.json({
+        status: 'failed',
+        message: 'No User Found.'});
     }
     req.logIn(user, function(err) {
       if (err) {
-        return res.json({message: 'password incorrect'});
+        return res.json({
+          status: 'failed',
+          message: 'Password is Incorrect.'
+        });
       }
       return res.json({
-        message: 'success',
+        status: 'success',
         userID: req.user._id
       });
     });
@@ -46,7 +56,8 @@ router.get('/logout',
   (req,res) => {
     req.logout();
     res.json({
-      message: 'success'
+      status: 'success',
+      message: 'User Logged Out.'
     });
 });
 
@@ -58,11 +69,12 @@ router.get('/user/:userid/watchlist',
       if(err){
         console.log(err);
         return res.json({
-          message: 'failed'
+          status: 'failed',
+          message: 'An error occured while getting watchlist.'
         });
       }
       res.json({
-        message: 'success',
+        status: 'success',
         watchlist: JSON.stringify(user.watchlist)
       });
   });
@@ -77,11 +89,12 @@ router.get('/user/:userid/watchlist/:movieid',
       if(err || !user){
         console.log(err);
         return res.json({
-          message: 'failed'
+          status: 'failed',
+          message: 'An error occured while getting movie data.'
         });
       }
       res.json({
-        message: 'success'
+        status: 'success'
       });
     });
 });
@@ -98,11 +111,13 @@ router.post('/user/:userid/watchlist/:movieid',
         if(err){
           console.log(err);
           return res.json({
-            message: 'failed'
+            status: 'failed',
+            message: 'An error occured while adding movie to watchlist.'
           });
         }
         res.json({
-          message: 'success'
+          status: 'success',
+          message: 'Movie added to watchlist successfully.'
         });
       }
     );
@@ -120,11 +135,13 @@ router.delete('/user/:userid/watchlist/:movieid',
         if(err) {
           console.log(err);
           return res.json({
-            message: 'failed'
+            status: 'failed',
+            message: 'Error occured while deleting movie from watchlist.'
           });
         }
         res.json({
-          message: 'success'
+          status: 'success',
+          message: 'Movie Deleted Successfully.'
         });
       }
     );

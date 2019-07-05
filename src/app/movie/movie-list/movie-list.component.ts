@@ -41,6 +41,10 @@ export class MovieListComponent implements OnInit {
       this.searchSize = response.totalResults;
       this.searchResult = response.Search.filter( movie => movie.Type === 'movie' || movie.Type === 'series');
       this.isLoading = false;
+    }, (error) => {
+      this.isLoading = false;
+      this.searchResult = null;
+      this.searchResult = null;
     });
   }
 
@@ -50,7 +54,7 @@ export class MovieListComponent implements OnInit {
 
   onMoreInfo(event) {
     const imdbID = event.currentTarget.id;
-    this.router.navigate(['/result/', imdbID]);
+    this.router.navigate(['result/', imdbID]);
   }
 
   onAddToWatchList(event) {
@@ -59,9 +63,9 @@ export class MovieListComponent implements OnInit {
     }
     const imdbID = event.currentTarget.id;
     this.movieService.addToWatchList(imdbID)
-      .subscribe( (response: {message: string}) => {
+      .subscribe( (response: {message: string, status: string}) => {
       console.log(response);
-      if ( response.message === 'success') {
+      if ( response.status === 'success') {
         event.target.innerText = 'Added to Watchlist';
       }
     });

@@ -16,14 +16,14 @@ export class AuthService {
 
   logIn(userData) {
     this.http.post('http://localhost:3000/login', userData, {withCredentials: true})
-    .subscribe( (response: {message: string, userID: string} ) => {
+    .subscribe( (response: {message: string, userID: string, status: string} ) => {
       console.log(response);
-      if (response.message === 'success') {
+      if (response.status === 'success') {
         this.isLoggedIn = true;
         this.loginStatus.next(true);
         this.userID = response.userID;
         this.router.navigate(['/']);
-      } else if (response.message === 'failed') {
+      } else if (response.status === 'failed') {
         this.isLoggedIn = false;
         this.loginStatus.next(false);
       }
@@ -34,12 +34,12 @@ export class AuthService {
 
   register(userData) {
     this.http.post('http://localhost:3000/register', userData, {withCredentials: true})
-      .subscribe( (response: {message: string} ) => {
+      .subscribe( (response: {message: string, status: string} ) => {
         console.log(response);
-        if (response.message === 'success') {
+        if (response.status === 'success') {
           this.isRegistered = true;
           this.router.navigate(['/login']);
-        } else if (response.message === 'failed') {
+        } else if (response.status === 'failed') {
           this.isRegistered = false;
         }
       });
@@ -51,9 +51,9 @@ export class AuthService {
 
   logout() {
     this.http.get('http://localhost:3000/logout', {withCredentials: true})
-      .subscribe( (response: {message: string}) => {
+      .subscribe( (response: {message: string, status: string}) => {
         console.log(response);
-        if (response.message === 'success') {
+        if (response.status === 'success') {
           this.loginStatus.next(false);
         }
       });

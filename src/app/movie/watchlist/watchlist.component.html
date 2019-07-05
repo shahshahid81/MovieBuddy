@@ -1,7 +1,7 @@
 <div class="movie-list">
   <mat-spinner *ngIf='isLoading'></mat-spinner>
   <div class="container" *ngIf='!isLoading'>
-    <h4 *ngIf="watchlist.length === 0"> Watchlist is empty!</h4>
+    <h4 *ngIf="watchlist === null || watchlist.length === 0"> Watchlist is empty!</h4>
     <div class="row" *ngIf="watchlist.length !== 0">
       <div class="col-sm-4 movie-tile" *ngFor="let movie of watchlist">
         <figure class="figure">

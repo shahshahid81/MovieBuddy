@@ -25,10 +25,13 @@ export class MovieDetailComponent implements OnInit {
       .subscribe( (response: any) => {
       this.response = response;
       this.movieService.getWatchListStatus(imdbID)
-        .subscribe( (status: any) => {
-          if (status.message === 'success') {
+        .subscribe( (watchlistStatus: any) => {
+          if (watchlistStatus.status === 'success') {
             this.isInWatchlist = true;
           }
+          this.isLoading = false;
+        }, (error) => {
+          this.isInWatchlist = false;
           this.isLoading = false;
         });
     });
@@ -45,9 +48,9 @@ export class MovieDetailComponent implements OnInit {
   onAddToWatchList(event) {
     const imdbID = event.currentTarget.id;
     this.movieService.addToWatchList(imdbID)
-      .subscribe( (response: {message: string}) => {
+      .subscribe( (response: {message: string, status: string}) => {
       console.log(response);
-      if ( response.message === 'success') {
+      if ( response.status === 'success') {
         this.isInWatchlist = true;
       }
     });
@@ -56,9 +59,9 @@ export class MovieDetailComponent implements OnInit {
   onRemoveFromWatchList(event) {
     const imdbID = event.currentTarget.id;
     this.movieService.removeFromWatchList(imdbID)
-      .subscribe( (response: any) => {
+      .subscribe( (response: {message: string, status: string}) => {
         console.log(response);
-        if (response.message === 'success') {
+        if (response.status === 'success') {
         this.isInWatchlist = false;
         }
       });
